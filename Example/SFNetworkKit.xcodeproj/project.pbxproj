@@ -31,6 +31,7 @@
 		04308D9C348F619E3E66B4F7 /* Pods_SFNetworkKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SFNetworkKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F92129877134D8CB143EF6 /* Pods-SFNetworkKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SFNetworkKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-SFNetworkKit_Tests/Pods-SFNetworkKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		3DBC8AC4A289AFF5B7B8D7AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		4157A63F25346688004C6FF0 /* Example+Request.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Example+Request.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		607FACD01AFB9204008FA782 /* SFNetworkKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFNetworkKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +79,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4157A63E2534664B004C6FF0 /* Playgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				4157A63F25346688004C6FF0 /* Example+Request.playground */,
+			);
+			path = Playgrounds;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +111,7 @@
 		607FACD21AFB9204008FA782 /* Examples for SFNetworkKit */ = {
 			isa = PBXGroup;
 			children = (
+				4157A63E2534664B004C6FF0 /* Playgrounds */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
