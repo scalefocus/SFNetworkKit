@@ -1,22 +1,15 @@
 import UIKit
 import SFNetworkKit
+import PlaygroundSupport
+
+// resolve path errors
+URLCache.shared = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
+
+PlaygroundPage.current.needsIndefiniteExecution = true
 
 // MARK: - Example Requests
 
 struct ExampleGetRequest: APIDataRequest {
-    var shouldCache: Bool
-    
-
-    var maximumAttempts: Int
-
-    var authorizationTokenProvider: AuthorizationTokenProvider?
-
-    var secretProvider: SecretProvider?
-
-    var trustPolicy: APITrustPolicyType
-
-    var logLevel: LogLevelType
-
     var parameters: RequestPayloadType {
         .query(items: ["foo1": "bar1", "foo2": "bar2"])
     }
@@ -27,6 +20,10 @@ struct ExampleGetRequest: APIDataRequest {
 
     var path: String {
         "get"
+    }
+
+    var logLevel: LogLevelType {
+        .verbose
     }
 }
 
@@ -46,6 +43,9 @@ struct ExampleResponse: Decodable {
 }
 
 let request = ExampleGetRequest()
-APIManager.default.request(request) { (result: Result<ExampleResponse, APIError>) in
+let manager = APIManager.default
+manager.request(request) { (result: Result<ExampleResponse, APIError>) in
     print(result)
+
+    PlaygroundPage.current.finishExecution()
 }
