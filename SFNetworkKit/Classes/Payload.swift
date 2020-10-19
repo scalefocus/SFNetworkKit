@@ -27,6 +27,7 @@ public enum RequestPayloadType {
     /// A requests body set as form urlencoded
     case form(Parameters)
 
+    // ??? Consider move it to special URL Builder class
     /// Parameters added to the path http://domain.com/path/{parameter1}/{parameter2}.
     /// Not to be confused with query components.
     case path(segments: [String])
@@ -107,7 +108,7 @@ open class RequestPayloadEncoder: PayloadEncoder {
 
 // NOTE: The original local file name may be supplied as well - `fileName`
 
-public enum APIMultipartRequestPayloadType {
+public enum MultipartRequestPayloadType {
     case data(data: Data, name: String, fileName: String?, mimeType: String?)
     case file(fileUrl: URL, name: String)
     case fileWithName(fileUrl: URL, name: String, fileName: String, mimeType: String)

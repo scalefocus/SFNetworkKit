@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 import SFNetworkKit
 import PlaygroundSupport
 
@@ -46,6 +46,9 @@ enum APIRouter: APIDataRequest {
         }
     }
 
+    var logLevel: LogLevelType {
+        .verbose
+    }
 }
 
 // MARK: - Example Responses
@@ -63,10 +66,10 @@ struct ExampleResponse: Decodable {
     var authenticated: Bool?
 }
 
+// MARK: - Example Call
+
 let request: APIRouter = .getPostman // .postPostman
 let manager = APIManager.default
 manager.request(request) { (result: Result<ExampleResponse, APIError>) in
-    print(result)
-
     PlaygroundPage.current.finishExecution()
 }

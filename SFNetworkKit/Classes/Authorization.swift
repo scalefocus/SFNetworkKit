@@ -48,3 +48,7 @@ public protocol SecretProvider {
 public protocol APIAuthenticator {
     func refreshToken(completion: @escaping (_ isSuccess: Bool) -> Void)
 }
+
+public extension APIAuthenticator {
+    func refreshToken(completion: @escaping (_ isSuccess: Bool) -> Void) { }
+}

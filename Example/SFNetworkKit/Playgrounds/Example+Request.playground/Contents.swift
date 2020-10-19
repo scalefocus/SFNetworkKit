@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 import SFNetworkKit
 import PlaygroundSupport
 
@@ -9,6 +9,7 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 // MARK: - Example Requests
 
+// NOTE: You can switch to stored properties
 struct ExampleGetRequest: APIDataRequest {
     var parameters: RequestPayloadType {
         .query(items: ["foo1": "bar1", "foo2": "bar2"])
@@ -22,6 +23,9 @@ struct ExampleGetRequest: APIDataRequest {
         "get"
     }
 
+    /// **This is an example how to log request and response**
+    /// Use `simple` if you don't need all details
+    /// Default is `none`, which means do not log anything
     var logLevel: LogLevelType {
         .verbose
     }
@@ -42,10 +46,10 @@ struct ExampleResponse: Decodable {
     var authenticated: Bool?
 }
 
+// MARK: - Example Call
+
 let request = ExampleGetRequest()
 let manager = APIManager.default
 manager.request(request) { (result: Result<ExampleResponse, APIError>) in
-    print(result)
-
     PlaygroundPage.current.finishExecution()
 }

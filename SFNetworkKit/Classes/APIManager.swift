@@ -39,7 +39,10 @@ public final class APIManager {
             .request(request, interceptor: interceptor)
             .cacheResponse(using: cacher)
             .validate(request.validation)
-            .apiResponseDecodable(decoder: decoder, completionHandler: completion)
+            .apiResponseDecodable(decoder: decoder) { (result: APIResult<T>) in
+                _ = session // !!! Capture me! Don't let me die! ;)
+                completion(result)
+            }
     }
 
     // TODO: Stream Request
@@ -56,7 +59,10 @@ public final class APIManager {
             .downloadProgress { progress in
                 downloadProgress?(progress.fractionCompleted)
             }
-            .apiResponseData(completionHandler: completion)
+            .apiResponseData { (result: APIResult<Data>) in
+                _ = session // !!! Capture me! Don't let me die! ;)
+                completion(result)
+            }
     }
 
     public final func upload<T: Decodable>(_ request: APIUploadRequest,
@@ -76,7 +82,10 @@ public final class APIManager {
             .downloadProgress { progress in
                 downloadProgress?(progress.fractionCompleted)
             }
-            .apiResponseDecodable(decoder: decoder, completionHandler: completion)
+            .apiResponseDecodable(decoder: decoder) { (result: APIResult<T>) in
+                _ = session // !!! Capture me! Don't let me die! ;)
+                completion(result)
+            }
     }
 
     public final func upload<T: Decodable>(_ request: APIMultipartRequest,
@@ -100,7 +109,10 @@ public final class APIManager {
             .downloadProgress { progress in
                 downloadProgress?(progress.fractionCompleted)
             }
-            .apiResponseDecodable(decoder: decoder, completionHandler: completion)
+            .apiResponseDecodable(decoder: decoder) { (result: APIResult<T>) in
+                _ = session // !!! Capture me! Don't let me die! ;)
+                completion(result)
+            }
     }
 
     // MARK: - Helpers

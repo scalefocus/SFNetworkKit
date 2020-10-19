@@ -38,7 +38,7 @@ public struct Settings {
 // MARK: - Base Request Protocol
 
 /// The protocol used to define the specifications necessary for the `Networker` to build an `URLRequest`
-public protocol APIRequest: URLConvertible, URLRequestConvertible, APIAuthorizable, APISecretable, APITrustPolicySettable, APILoggable {
+public protocol APIRequest: URLConvertible, URLRequestConvertible, APIAuthorizable, APISecretable, APITrustPolicySettable, APILoggable, APICacheable, APIRefreshable {
 
     /// Base url(<host.com>).
     var baseUrl: String { get }
@@ -94,7 +94,7 @@ public extension APIRequest {
 
 // MARK: - URLConvertible
 
-extension APIRequest {
+public extension APIRequest {
     func asURL() throws -> URL {
         guard let url = URL(string: baseUrl) else {
             throw APIError.invalidBaseUrl
@@ -104,9 +104,9 @@ extension APIRequest {
     }
 }
 
-extension APIRequest {
+public extension APIRequest {
     func asURLRequest() throws -> URLRequest {
-        return try urlRequest()
+        try urlRequest()
     }
 
     func urlRequest() throws -> URLRequest {
@@ -155,19 +155,19 @@ extension APIRequest {
 
 // Data request
 
-public protocol APIDataRequest: APIRequest, APICacheable, APIRefreshable {
+public protocol APIDataRequest: APIRequest {
     /// Encapsulates the parameters that should be passed to the server.  Dafault is `.plain` - no parameters.
     var parameters: RequestPayloadType { get }
 }
 
-extension APIDataRequest {
+public extension APIDataRequest {
     /// Dafault is `.plain` - no parameters
     var parameters: RequestPayloadType {
         .plain
     }
 }
 
-extension APIDataRequest {
+public extension APIDataRequest {
     func asURLRequest() throws -> URLRequest {
         var urlRequest = try self.urlRequest()
 
@@ -188,7 +188,7 @@ public protocol APIDownloadRequest: DownloadableConvertible, APIDataRequest {
     var destination: APIDownloadDestination? { get }
 }
 
-extension APIDownloadRequest {
+public extension APIDownloadRequest {
     var downloadable: APIDownloadPayload {
         .request(self)
     }
@@ -198,7 +198,7 @@ extension APIDownloadRequest {
     }
 }
 
-extension APIDownloadRequest {
+public extension APIDownloadRequest {
     func createDownloadable() throws -> APIDownloadPayload {
         downloadable
     }
@@ -210,7 +210,7 @@ public protocol APIUploadRequest: UploadConvertible, APIRequest {
     var uploadable: APIUploadPayload { get }
 }
 
-extension APIUploadRequest {
+public extension APIUploadRequest {
     func createUploadable() throws -> APIUploadPayload {
         uploadable
     }
@@ -220,10 +220,10 @@ extension APIUploadRequest {
 
 public protocol APIMultipartRequest: APIRequest {
     /// The parameters that should be passed to the server.
-    var bodyParts: [APIMultipartRequestPayloadType] { get }
+    var bodyParts: [MultipartRequestPayloadType] { get }
 }
 
-extension APIMultipartRequest {
+public extension APIMultipartRequest {
     func asMultipartFormData() -> Alamofire.MultipartFormData {
         let multipartFormData = Alamofire.MultipartFormData()
         bodyParts.forEach {
@@ -265,7 +265,7 @@ public protocol APICacheable {
     var shouldCache: Bool { get }
 }
 
-extension APICacheable {
+public extension APICacheable {
     /// Default is `false`.
     var shouldCache: Bool {
         false
@@ -279,7 +279,7 @@ public protocol APIRefreshable {
     var maximumAttempts: Int { get }
 }
 
-extension APIRefreshable {
+public extension APIRefreshable {
     /// Default is `zero`
     var maximumAttempts: Int {
         0
@@ -292,10 +292,22 @@ public protocol APIAuthorizable {
     var authorizationTokenProvider: AuthorizationTokenProvider? { get }
 }
 
+public extension APIAuthorizable {
+    var authorizationTokenProvider: AuthorizationTokenProvider? {
+        nil
+    }
+}
+
 //
 
 public protocol APISecretable {
     var secretProvider: SecretProvider? { get }
+}
+
+public extension APISecretable {
+    var secretProvider: SecretProvider? {
+        nil
+    }
 }
 
 //
@@ -304,14 +316,14 @@ public protocol APITrustPolicySettable {
     var trustPolicy: APITrustPolicyType { get }
 }
 
-extension APITrustPolicySettable {
+public extension APITrustPolicySettable {
     // Applications should always validate the host in production environments
     var trustPolicy: APITrustPolicyType {
         .host
     }
 }
 
-extension APITrustPolicySettable {
+public extension APITrustPolicySettable {
     func serverTrustEvaluator() -> Alamofire.ServerTrustEvaluating {
         switch self.trustPolicy {
         case .none:
@@ -335,13 +347,13 @@ public protocol APILoggable {
     var logLevel: LogLevelType { get }
 }
 
-extension APILoggable {
+public extension APILoggable {
     var logLevel: LogLevelType {
         .none
     }
 }
 
-//
+// MARK: - Alamofire
 
 // NOTE: Strange but DownloadableConvertible is not implemented in Alamofire
 

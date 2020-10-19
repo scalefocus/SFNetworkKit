@@ -33,6 +33,9 @@
 		3DBC8AC4A289AFF5B7B8D7AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		4157A63F25346688004C6FF0 /* Example+Request.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Example+Request.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4157A6A32535A3D5004C6FF0 /* Example+Router.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Example+Router.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		4157A6CE2536CBEF004C6FF0 /* Example+BasicAuth.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Example+BasicAuth.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		4157A6D12536D029004C6FF0 /* Example+OAuth1.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Example+OAuth1.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		415F8BF42537160C001FBD39 /* Example+Download.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Example+Download.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		607FACD01AFB9204008FA782 /* SFNetworkKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFNetworkKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +88,9 @@
 			children = (
 				4157A63F25346688004C6FF0 /* Example+Request.playground */,
 				4157A6A32535A3D5004C6FF0 /* Example+Router.playground */,
+				4157A6CE2536CBEF004C6FF0 /* Example+BasicAuth.playground */,
+				4157A6D12536D029004C6FF0 /* Example+OAuth1.playground */,
+				415F8BF42537160C001FBD39 /* Example+Download.playground */,
 			);
 			path = Playgrounds;
 			sourceTree = "<group>";

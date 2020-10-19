@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 extension Alamofire.MultipartFormData {
-    public func append(_ bodyPart: APIMultipartRequestPayloadType) {
+    public func append(_ bodyPart: MultipartRequestPayloadType) {
         switch bodyPart {
         case .data(let data, let name, let fileName, let mimeType):
             append(data, withName: name, fileName: fileName, mimeType: mimeType)
@@ -24,7 +24,7 @@ extension Alamofire.MultipartFormData {
         }
     }
 
-    public func append(_ bodyParts: [APIMultipartRequestPayloadType]) {
+    public func append(_ bodyParts: [MultipartRequestPayloadType]) {
         bodyParts.forEach { append($0) }
     }
 }
