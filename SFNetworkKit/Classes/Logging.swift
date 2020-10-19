@@ -35,7 +35,32 @@ final class AlamofireLogger: EventMonitor {
         _queue
     }
 
-    func requestDidResume(_ request: Request) {
+//    func requestDidResume(_ request: Request) {
+//        guard level != .none else {
+//            return
+//        }
+//
+//        guard let method = request.lastRequest?.httpMethod, let url = request.lastRequest?.url else {
+//            return
+//        }
+//
+//        var message = "[REQUEST] \(method) \(url.absoluteString)"
+//
+//        if level == .verbose {
+//            if let headers = request.lastRequest?.allHTTPHeaderFields {
+//                for header in headers {
+//                    message += "\n\(header.key): \(header.value)"
+//                }
+//            }
+//            if let data = request.lastRequest?.httpBody, let body = String(data: data, encoding: .utf8) {
+//                message += "\n\(body)"
+//            }
+//        }
+//
+//        print(message)
+//    }
+
+    func requestDidFinish(_ request: Request) {
         guard level != .none else {
             return
         }
@@ -44,7 +69,7 @@ final class AlamofireLogger: EventMonitor {
             return
         }
 
-        var message = "[REQUEST] \(method) \(url.absoluteString)"
+        var message = "[REQUEST] [\(request.id)] \(method) \(url.absoluteString)"
 
         if level == .verbose {
             if let headers = request.lastRequest?.allHTTPHeaderFields {
@@ -58,18 +83,8 @@ final class AlamofireLogger: EventMonitor {
         }
 
         print(message)
-    }
 
-    func requestDidFinish(_ request: Request) {
-        guard level != .none else {
-            return
-        }
-
-        guard let method = request.lastRequest?.httpMethod, let url = request.lastRequest?.url else {
-            return
-        }
-
-        var message = "[RESPONSE] \(method) \(request.response?.statusCode ?? -1) \(url) \(String(format: "%.3fms", (request.metrics?.taskInterval.duration ?? 0) * 1000))"
+        message = "[RESPONSE] [\(request.id)] \(method) \(request.response?.statusCode ?? -1) \(url) \(String(format: "%.3fms", (request.metrics?.taskInterval.duration ?? 0) * 1000))"
 
         if let err = request.error?.localizedDescription {
             message += " [!] \(err)"
