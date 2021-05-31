@@ -10,6 +10,8 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 // MARK: - Example Requests
 
 struct ExampleBasicAuthRequest: APIDataRequest {
+    typealias Response = ExampleBasicAuthResponse
+    
     var baseUrl: String {
         "https://postman-echo.com/"
     }
@@ -58,7 +60,22 @@ let request = ExampleBasicAuthRequest()
 let manager = APIManager.default
 // `JSONDecoder` is the default decoder, it can be ommited.
 // It is left here just as an example, that we can pass any decoder to parse the response
-manager.request(request, JSONDecoder()) { (result: Result<ExampleBasicAuthResponse, APIError>) in
+manager.request(request, JSONDecoder()) { result in
     print(result)
-    PlaygroundPage.current.finishExecution()
 }
+
+// MARK: - Combine example
+import Combine
+var cancellables: [AnyCancellable] = []
+manager
+    .requestPublisher(request, decoder: JSONDecoder())
+    .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure(let error):
+            print(error.localizedDescription)
+        default:
+            break
+        }
+    }, receiveValue: { result in
+        print(result)
+    }).store(in: &cancellables)

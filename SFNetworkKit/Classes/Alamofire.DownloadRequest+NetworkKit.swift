@@ -20,6 +20,7 @@ extension Alamofire.DownloadRequest {
 // MARK: - Response
 
 extension Alamofire.DownloadRequest {
+    @discardableResult
     public func apiResponseData(queue: DispatchQueue = .main,
                                 dataPreprocessor: DataPreprocessor = DataResponseSerializer.defaultDataPreprocessor,
                                 emptyResponseCodes: Set<Int> = DataResponseSerializer.defaultEmptyResponseCodes,

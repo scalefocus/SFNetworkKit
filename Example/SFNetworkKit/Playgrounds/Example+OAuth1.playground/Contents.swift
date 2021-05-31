@@ -10,6 +10,8 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 // MARK: - Example Requests
 
 struct ExampleOAuth1Request: APIDataRequest {
+    typealias Response = ExampleOAuth1Response
+    
     var baseUrl: String {
         "https://postman-echo.com/"
     }
@@ -63,6 +65,22 @@ struct OAuth1TokenProvider: AuthorizationTokenProvider {
 
 let request = ExampleOAuth1Request()
 let manager = APIManager.default
-manager.request(request) { (result: Result<ExampleOAuth1Response, APIError>) in
-    PlaygroundPage.current.finishExecution()
+manager.request(request) { result in
+    print(result)
 }
+
+// MARK: - Combine example
+import Combine
+var cancellables: [AnyCancellable] = []
+manager
+    .requestPublisher(request)
+    .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure(let error):
+            print(error.localizedDescription)
+        default:
+            break
+        }
+    }, receiveValue: { result in
+        print(result)
+    }).store(in: &cancellables)

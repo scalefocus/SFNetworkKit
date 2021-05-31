@@ -40,6 +40,8 @@ public struct Settings {
 /// The protocol used to define the specifications necessary for the `Networker` to build an `URLRequest`
 public protocol APIRequest: URLConvertible, URLRequestConvertible, APIAuthorizable, APISecretable, APITrustPolicySettable, APILoggable, APICacheable, APIRefreshable {
 
+    associatedtype Response: Decodable
+    
     /// Base url(<host.com>).
     var baseUrl: String { get }
 
@@ -183,7 +185,7 @@ public extension APIDataRequest {
 public typealias APIDownloadPayload = Alamofire.DownloadRequest.Downloadable
 public typealias APIDownloadDestination = Alamofire.DownloadRequest.Destination
 
-public protocol APIDownloadRequest: DownloadableConvertible, APIDataRequest {
+public protocol APIDownloadRequest: DownloadableConvertible, APIDataRequest where Response == Data {
     var downloadable: APIDownloadPayload { get }
     var destination: APIDownloadDestination? { get }
 }
