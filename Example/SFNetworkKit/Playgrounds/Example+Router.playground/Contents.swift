@@ -10,7 +10,8 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 // MARK: - Example Router
 
 enum APIRouter: APIDataRequest {
-
+    typealias Response = ExampleResponse
+    
     // !!! In real world example we will have associated values to pass request's parameters
     case getPostman
     case postPostman
@@ -70,6 +71,22 @@ struct ExampleResponse: Decodable {
 
 let request: APIRouter = .getPostman // .postPostman
 let manager = APIManager.default
-manager.request(request) { (result: Result<ExampleResponse, APIError>) in
-    PlaygroundPage.current.finishExecution()
+manager.request(request) { result in
+    print(result)
 }
+
+// MARK: - Combine example
+import Combine
+var cancellables: [AnyCancellable] = []
+manager
+    .requestPublisher(request)
+    .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure(let error):
+            print(error.localizedDescription)
+        default:
+            break
+        }
+    }, receiveValue: { result in
+        print(result)
+    }).store(in: &cancellables)

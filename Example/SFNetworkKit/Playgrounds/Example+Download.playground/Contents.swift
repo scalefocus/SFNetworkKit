@@ -12,6 +12,7 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 // NOTE: This is an example how we can use path parameters.
 // You can build the url in many other ways
 struct ExampleDownloadRequest: APIDownloadRequest {
+    typealias Response = Data
 
     var baseUrl: String {
         "https://www.hackingwithswift.com/"
@@ -34,8 +35,23 @@ manager.download(request) { (result) in
     let data = try! result.get()
     let image = UIImage.init(data: data)!
     show(image: image)
-//    PlaygroundPage.current.finishExecution()
 }
+
+// MARK: - Combine example
+import Combine
+var cancellables: [AnyCancellable] = []
+manager
+    .downloadPublisher(request)
+    .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure(let error):
+            print(error.localizedDescription)
+        default:
+            break
+        }
+    }, receiveValue: { result in
+        print(result)
+    }).store(in: &cancellables)
 
 // МАРК: - Helpers
 

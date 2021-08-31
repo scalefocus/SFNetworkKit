@@ -1,6 +1,7 @@
 import Foundation
 import SFNetworkKit
 import PlaygroundSupport
+import Combine
 
 // resolve path errors
 URLCache.shared = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
@@ -11,6 +12,8 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 // NOTE: You can switch to stored properties
 struct ExampleGetRequest: APIDataRequest {
+    typealias Response = ExampleResponse
+    
     var parameters: RequestPayloadType {
         .query(items: ["foo1": "bar1", "foo2": "bar2"])
     }
@@ -50,6 +53,22 @@ struct ExampleResponse: Decodable {
 
 let request = ExampleGetRequest()
 let manager = APIManager.default
-manager.request(request) { (result: Result<ExampleResponse, APIError>) in
-    PlaygroundPage.current.finishExecution()
+manager.request(request) { result in
+    print(result)
 }
+
+// MARK: - Combine example
+import Combine
+var cancellables: [AnyCancellable] = []
+manager
+    .requestPublisher(request)
+    .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure(let error):
+            print(error.localizedDescription)
+        default:
+            break
+        }
+    }, receiveValue: { result in
+        print(result)
+    }).store(in: &cancellables)
