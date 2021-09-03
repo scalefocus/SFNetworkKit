@@ -54,7 +54,7 @@ public final class NetworkObserver {
 
 // MARK: - NetworkMonitor
 
-public protocol NetworkMonitor: class {
+public protocol NetworkMonitor: AnyObject {
     /// The `DispatchQueue` onto which NetworkKit's root `CompositeNetworkMonitor` will dispatch events. `.main` by default.
     var queue: DispatchQueue { get }
 
