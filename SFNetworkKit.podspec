@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SFNetworkKit'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.summary          = 'SFNetworkKit: Core networking and API functionality for Scalefocus iOS apps.'
 
 # This description is used to generate tags and improve search results.
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.author           = { 'ASPetrov' => 'aleksandar.spetrov@scalefocus.com' }
   s.source           = { :git => 'https://github.com/scalefocus/SFNetworkKit.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'SFNetworkKit/Classes/**/*'
   
